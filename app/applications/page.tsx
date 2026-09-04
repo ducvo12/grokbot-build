@@ -32,9 +32,6 @@ export default async function LedgerPage({
         <h2 className="font-display text-4xl text-ink">Every leaf, in a line.</h2>
       </div>
       <Filters query={query} status={status} sort={sort} />
-      <p className="text-sm text-ink-soft">
-        {applications.length} {applications.length === 1 ? "entry" : "entries"}
-      </p>
       <ApplicationList applications={applications} hasFilters={Boolean(query) || status !== "all"} />
     </div>
   );

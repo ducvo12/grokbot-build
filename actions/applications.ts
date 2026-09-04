@@ -3,7 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { eq } from "drizzle-orm";
 import { db } from "@/lib/db";
-import { applications, statusEvents } from "@/lib/db/schema";
+import { applications, statusEvents, type Application } from "@/lib/db/schema";
 import {
   applicationSchema,
   type ApplicationInput,
@@ -183,4 +183,47 @@ export async function deleteApplication(id: string): Promise<ActionResult> {
 
   refresh();
   return { ok: true, id };
+}
+
+export async function restoreApplication(row: Application): Promise<ActionResult> {
+  const existing = db.select().from(applications).where(eq(applications.id, row.id)).get();
+  if (existing) {
+    return { ok: true, id: row.id };
+  }
+
+  try {
+    db.insert(applications)
+      .values({
+        id: row.id,
+        companyName: row.companyName,
+        jobTitle: row.jobTitle,
+        companyLogoUrl: row.companyLogoUrl,
+        location: row.location,
+        salaryMin: row.salaryMin,
+        salaryMax: row.salaryMax,
+        jobUrl: row.jobUrl,
+        appliedAt: row.appliedAt,
+        status: row.status,
+        notes: row.notes,
+        source: row.source,
+        createdAt: row.createdAt,
+        updatedAt: row.updatedAt,
+      })
+      .run();
+
+    db.insert(statusEvents)
+      .values({
+        id: crypto.randomUUID(),
+        applicationId: row.id,
+        fromStatus: null,
+        toStatus: row.status,
+        changedAt: nowIso(),
+      })
+      .run();
+  } catch {
+    return { ok: false, error: "Could not put that leaf back." };
+  }
+
+  refresh();
+  return { ok: true, id: row.id };
 }
