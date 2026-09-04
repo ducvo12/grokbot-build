@@ -56,7 +56,7 @@ export function Overview({ data }: { data: DashboardData }) {
         />
         <StatBlock
           index="VI"
-          label="Closed"
+          label="Rejections"
           value={data.rejections}
           hint="Not a verdict on you. Just a door that shut."
           className="md:col-span-4"
