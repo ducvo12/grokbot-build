@@ -3,7 +3,20 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { STATUSES, STATUS_META } from "@/lib/constants";
-import { Input, NativeSelect } from "@/components/ui/field";
+import { Input } from "@/components/ui/field";
+import { Select } from "@/components/ui/select";
+
+const STATUS_OPTIONS = [
+  { value: "all", label: "Every stage" },
+  ...STATUSES.map((value) => ({ value, label: STATUS_META[value].label })),
+];
+
+const SORT_OPTIONS = [
+  { value: "updated", label: "Latest mark" },
+  { value: "company", label: "Company" },
+  { value: "applied", label: "Application date" },
+  { value: "salary", label: "Salary" },
+];
 
 export function Filters({
   query,
@@ -56,30 +69,22 @@ export function Filters({
         />
       </div>
       <div className="md:col-span-3">
-        <NativeSelect
+        <Select
           name="status"
+          aria-label="Stage"
           value={status}
-          onChange={(event) => commit({ status: event.target.value })}
-        >
-          <option value="all">Every stage</option>
-          {STATUSES.map((value) => (
-            <option key={value} value={value}>
-              {STATUS_META[value].label}
-            </option>
-          ))}
-        </NativeSelect>
+          onChange={(value) => commit({ status: value })}
+          options={STATUS_OPTIONS}
+        />
       </div>
       <div className="md:col-span-3">
-        <NativeSelect
+        <Select
           name="sort"
+          aria-label="Sort"
           value={sort}
-          onChange={(event) => commit({ sort: event.target.value })}
-        >
-          <option value="updated">Latest mark</option>
-          <option value="company">Company</option>
-          <option value="applied">Application date</option>
-          <option value="salary">Salary</option>
-        </NativeSelect>
+          onChange={(value) => commit({ sort: value })}
+          options={SORT_OPTIONS}
+        />
       </div>
     </form>
   );

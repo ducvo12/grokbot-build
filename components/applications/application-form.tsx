@@ -1,6 +1,6 @@
 "use client";
 
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SOURCES, STATUSES, STATUS_META } from "@/lib/constants";
 import {
@@ -9,7 +9,8 @@ import {
   type ApplicationInput,
 } from "@/lib/validations/application";
 import type { Application } from "@/lib/db/schema";
-import { FieldError, Input, Label, NativeSelect, Textarea } from "@/components/ui/field";
+import { FieldError, Input, Label, Textarea } from "@/components/ui/field";
+import { Select } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 
 function toValues(application?: Application | null): ApplicationFormValues {
@@ -72,14 +73,22 @@ export function ApplicationForm({
         </div>
         <div>
           <Label htmlFor="source">Source</Label>
-          <NativeSelect id="source" {...form.register("source")}>
-            <option value="">Unknown</option>
-            {SOURCES.map((source) => (
-              <option key={source} value={source}>
-                {source}
-              </option>
-            ))}
-          </NativeSelect>
+          <Controller
+            name="source"
+            control={form.control}
+            render={({ field }) => (
+              <Select
+                id="source"
+                name={field.name}
+                value={field.value ?? ""}
+                onChange={field.onChange}
+                options={[
+                  { value: "", label: "Unknown" },
+                  ...SOURCES.map((source) => ({ value: source, label: source })),
+                ]}
+              />
+            )}
+          />
         </div>
       </div>
 
@@ -103,13 +112,22 @@ export function ApplicationForm({
       <div className="grid gap-4 sm:grid-cols-2">
         <div>
           <Label htmlFor="status">Stage</Label>
-          <NativeSelect id="status" {...form.register("status")}>
-            {STATUSES.map((status) => (
-              <option key={status} value={status}>
-                {STATUS_META[status].label}
-              </option>
-            ))}
-          </NativeSelect>
+          <Controller
+            name="status"
+            control={form.control}
+            render={({ field }) => (
+              <Select
+                id="status"
+                name={field.name}
+                value={field.value}
+                onChange={field.onChange}
+                options={STATUSES.map((status) => ({
+                  value: status,
+                  label: STATUS_META[status].label,
+                }))}
+              />
+            )}
+          />
         </div>
         <div>
           <Label htmlFor="jobUrl">Posting</Label>
