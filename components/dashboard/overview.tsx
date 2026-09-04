@@ -46,12 +46,14 @@ export function Overview({ data }: { data: DashboardData }) {
           index="IV"
           label="Talking"
           value={data.interviews}
+          hint="Roles that made it to the table — or the call."
           className="md:col-span-4"
         />
         <StatBlock
           index="V"
           label="Offers"
           value={data.offers}
+          hint="The rare ones. A yes, written down."
           className="md:col-span-4"
         />
         <StatBlock
