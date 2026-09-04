@@ -5,28 +5,18 @@ import { CSS } from "@dnd-kit/utilities";
 import { MapPin } from "lucide-react";
 import type { Application } from "@/lib/db/schema";
 import { CompanySeal } from "@/components/brand/company-seal";
-import { StatusStamp } from "@/components/brand/status-stamp";
 import { formatSalary, formatShortDate } from "@/lib/format";
 import { cn } from "@/lib/cn";
 import { useFolioUi } from "@/components/providers";
 
-function CardFace({
-  application,
-  overlay,
-}: {
-  application: Application;
-  overlay?: boolean;
-}) {
+function CardFace({ application }: { application: Application }) {
   const salary = formatSalary(application.salaryMin, application.salaryMax);
 
   return (
     <>
-      <div className="absolute top-2 right-2">
-        <StatusStamp status={application.status} className={cn("scale-90", overlay && "stamp-in")} />
-      </div>
       <div className="flex items-start gap-3">
         <CompanySeal name={application.companyName} logoUrl={application.companyLogoUrl} size="sm" />
-        <div className="min-w-0 pr-10">
+        <div className="min-w-0">
           <p className="truncate font-medium text-ink">{application.companyName}</p>
           <p className="truncate text-sm text-ink-soft">{application.jobTitle}</p>
         </div>
@@ -61,7 +51,7 @@ export function KanbanCard({
         className="card-tilt relative w-[16.5rem] cursor-grabbing rounded-sm border border-rule bg-vellum p-3 shadow-[0_28px_40px_-18px_rgb(28_25_20_/_0.55)]"
         style={{ rotate: `${tilt}deg` }}
       >
-        <CardFace application={application} overlay />
+        <CardFace application={application} />
       </article>
     );
   }

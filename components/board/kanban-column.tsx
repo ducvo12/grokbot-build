@@ -34,7 +34,7 @@ export function KanbanColumn({
     >
       <header className={cn("flex items-end justify-between border-b-2 px-3 py-3", heads[status])}>
         <div>
-          <p className="text-[11px] tracking-[0.2em] uppercase">{STATUS_META[status].stamp}</p>
+          <p className="text-[11px] tracking-[0.2em] uppercase">{STATUS_META[status].label}</p>
           <h2 className="font-display text-2xl text-ink">{STATUS_META[status].label}</h2>
         </div>
         <span className="font-display text-2xl text-ink">{items.length}</span>

@@ -27,7 +27,7 @@ export function StatusStamp({
         className,
       )}
     >
-      {STATUS_META[status].stamp}
+      {STATUS_META[status].label}
     </span>
   );
 }

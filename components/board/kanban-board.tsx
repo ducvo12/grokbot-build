@@ -80,7 +80,7 @@ export function KanbanBoard({ initial }: { initial: Application[] }) {
       toast.error(result.error);
       return;
     }
-    toast.success(`Stamped ${STATUS_META[nextStatus].stamp}.`);
+    toast.success(`Stamped ${STATUS_META[nextStatus].label}.`);
   }
 
   if (initial.length === 0) {
