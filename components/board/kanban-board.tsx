@@ -20,6 +20,7 @@ import { updateApplicationStatus } from "@/actions/applications";
 import { KanbanColumn } from "@/components/board/kanban-column";
 import { KanbanCard } from "@/components/board/kanban-card";
 import { EmptyState } from "@/components/shared/empty-state";
+import { BoardSkeleton } from "@/components/shared/skeletons";
 
 function isStatus(value: string): value is Status {
   return (STATUSES as readonly string[]).includes(value);
@@ -28,10 +29,15 @@ function isStatus(value: string): value is Status {
 export function KanbanBoard({ initial }: { initial: Application[] }) {
   const [items, setItems] = useState(initial);
   const [active, setActive] = useState<Application | null>(null);
+  const [ready, setReady] = useState(false);
 
   useEffect(() => {
     setItems(initial);
   }, [initial]);
+
+  useEffect(() => {
+    setReady(true);
+  }, []);
   const sensors = useSensors(
     useSensor(PointerSensor, { activationConstraint: { distance: 6 } }),
     useSensor(KeyboardSensor, { coordinateGetter: sortableKeyboardCoordinates }),
@@ -92,8 +98,13 @@ export function KanbanBoard({ initial }: { initial: Application[] }) {
     );
   }
 
+  if (!ready) {
+    return <BoardSkeleton />;
+  }
+
   return (
     <DndContext
+      id="folio-board"
       sensors={sensors}
       collisionDetection={closestCorners}
       onDragStart={onDragStart}

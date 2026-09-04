@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Plus } from "lucide-react";
@@ -12,6 +13,11 @@ import { useFolioUi } from "@/components/providers";
 export function Masthead() {
   const pathname = usePathname();
   const { openCreate } = useFolioUi();
+  const [printed, setPrinted] = useState("");
+
+  useEffect(() => {
+    setPrinted(todayLine());
+  }, []);
 
   return (
     <header className="relative">
@@ -30,7 +36,9 @@ export function Masthead() {
           </Link>
         </div>
         <div className="hidden shrink-0 text-right sm:block">
-          <p className="font-display text-xl text-ink">{todayLine()}</p>
+          <p className="font-display text-xl text-ink" suppressHydrationWarning>
+            {printed}
+          </p>
           <p className="mt-1 text-[11px] tracking-[0.18em] text-ink-soft uppercase">
             Printed in the browser
           </p>

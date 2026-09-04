@@ -2,7 +2,7 @@
 
 import { STATUS_META } from "@/lib/constants";
 import type { DashboardData } from "@/lib/db/queries";
-import { formatRelative } from "@/lib/format";
+import { RelativeTime } from "@/components/shared/relative-time";
 import { StatusStamp } from "@/components/brand/status-stamp";
 
 export function RecentActivity({ events }: { events: DashboardData["recent"] }) {
@@ -36,7 +36,7 @@ export function RecentActivity({ events }: { events: DashboardData["recent"] }) 
             </div>
             <div className="flex shrink-0 items-center gap-3">
               <span className="hidden text-xs text-ink-soft sm:inline">
-                {formatRelative(event.changedAt)}
+                <RelativeTime value={event.changedAt} />
               </span>
               <StatusStamp status={event.toStatus} />
             </div>

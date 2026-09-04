@@ -12,7 +12,8 @@ import { ConfirmDialog } from "@/components/ui/confirm-dialog";
 import { Button } from "@/components/ui/button";
 import { CompanySeal } from "@/components/brand/company-seal";
 import { StatusStamp } from "@/components/brand/status-stamp";
-import { formatRelative, formatSalary } from "@/lib/format";
+import { formatSalary } from "@/lib/format";
+import { RelativeTime } from "@/components/shared/relative-time";
 
 export function ApplicationDrawer({
   application,
@@ -74,7 +75,7 @@ export function ApplicationDrawer({
                 <div>
                   <p className="text-sm text-ink-soft">{application.jobTitle}</p>
                   <p className="text-xs text-ink-soft/80">
-                    Revised {formatRelative(application.updatedAt)}
+                    Revised <RelativeTime value={application.updatedAt} />
                     {formatSalary(application.salaryMin, application.salaryMax)
                       ? ` · ${formatSalary(application.salaryMin, application.salaryMax)}`
                       : ""}

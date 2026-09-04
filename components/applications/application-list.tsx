@@ -4,7 +4,8 @@ import { MapPin } from "lucide-react";
 import type { Application } from "@/lib/db/schema";
 import { CompanySeal } from "@/components/brand/company-seal";
 import { StatusStamp } from "@/components/brand/status-stamp";
-import { formatRelative, formatSalary, formatShortDate } from "@/lib/format";
+import { formatSalary, formatShortDate } from "@/lib/format";
+import { RelativeTime } from "@/components/shared/relative-time";
 import { useFolioUi } from "@/components/providers";
 import { EmptyState } from "@/components/shared/empty-state";
 
@@ -59,7 +60,9 @@ export function ApplicationList({
                 {application.appliedAt
                   ? `Dated ${formatShortDate(application.appliedAt)}`
                   : "No date yet"}
-                <span>Revised {formatRelative(application.updatedAt)}</span>
+                <span>
+                  Revised <RelativeTime value={application.updatedAt} />
+                </span>
               </p>
             </div>
           </button>
