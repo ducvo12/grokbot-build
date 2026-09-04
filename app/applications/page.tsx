@@ -31,12 +31,7 @@ export default async function LedgerPage({
         <p className="text-[11px] tracking-[0.22em] text-clay uppercase">The ledger</p>
         <h2 className="font-display text-4xl text-ink">Every leaf, in a line.</h2>
       </div>
-      <Filters
-        key={`${query}-${status}-${sort}`}
-        query={query}
-        status={status}
-        sort={sort}
-      />
+      <Filters query={query} status={status} sort={sort} />
       <p className="text-sm text-ink-soft">
         {applications.length} {applications.length === 1 ? "entry" : "entries"}
       </p>
