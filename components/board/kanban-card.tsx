@@ -76,7 +76,7 @@ function SortableLeaf({
 }) {
   const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
     id: application.id,
-    data: { application },
+    data: { type: "card", application, status: application.status },
   });
 
   return (

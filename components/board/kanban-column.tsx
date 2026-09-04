@@ -1,6 +1,6 @@
 "use client";
 
-import { useDroppable } from "@dnd-kit/core";
+import { useDndContext, useDroppable } from "@dnd-kit/core";
 import { SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable";
 import { STATUS_META, type Status } from "@/lib/constants";
 import type { Application } from "@/lib/db/schema";
@@ -22,14 +22,22 @@ export function KanbanColumn({
   status: Status;
   items: Application[];
 }) {
-  const { setNodeRef, isOver } = useDroppable({ id: status });
+  const { over } = useDndContext();
+  const { setNodeRef, isOver } = useDroppable({
+    id: status,
+    data: { type: "column", status },
+  });
+  const overInColumn =
+    isOver ||
+    (over != null &&
+      (over.id === status || items.some((item) => item.id === over.id)));
 
   return (
     <section
       ref={setNodeRef}
       className={cn(
         "flex w-[min(18rem,80vw)] shrink-0 flex-col rounded-sm border border-rule bg-paper-2/40",
-        isOver && "bg-paper-2",
+        overInColumn && "bg-paper-2",
       )}
     >
       <header className={cn("flex items-end justify-between border-b-2 px-3 py-3", heads[status])}>

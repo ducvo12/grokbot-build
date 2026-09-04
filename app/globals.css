@@ -161,7 +161,9 @@ body {
     opacity: 0;
   }
   to {
-    transform: translateY(0);
+    /* `none` (not translateY(0)) so fixed children like DragOverlay
+       stay viewport-relative after the animation settles. */
+    transform: none;
     opacity: 1;
   }
 }
