@@ -23,7 +23,7 @@ export function ConfirmDialog({
   return (
     <AlertDialog.Root open={open} onOpenChange={onOpenChange}>
       <AlertDialog.Portal>
-        <AlertDialog.Overlay className="fixed inset-0 z-[60] bg-[#1c1914]/40" />
+        <AlertDialog.Overlay className="fixed inset-0 z-[60] bg-overlay/40" />
         <AlertDialog.Content className="fixed top-1/2 left-1/2 z-[60] w-[min(420px,calc(100vw-1.5rem))] -translate-x-1/2 -translate-y-1/2 rounded-sm border border-rule bg-paper p-6 shadow-xl">
           <p className="text-[11px] tracking-[0.2em] text-rust uppercase">Irreversible</p>
           <AlertDialog.Title className="font-display mt-1 text-3xl">{title}</AlertDialog.Title>

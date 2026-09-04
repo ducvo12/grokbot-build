@@ -9,6 +9,7 @@ import { todayLine } from "@/lib/format";
 import { cn } from "@/lib/cn";
 import { Button } from "@/components/ui/button";
 import { useFolioUi } from "@/components/providers";
+import { ThemeSwitch } from "@/components/theme/theme-switch";
 
 export function Masthead() {
   const pathname = usePathname();
@@ -35,13 +36,16 @@ export function Masthead() {
             </h1>
           </Link>
         </div>
-        <div className="hidden shrink-0 text-right sm:block">
-          <p className="font-display text-xl text-ink" suppressHydrationWarning>
-            {printed}
-          </p>
-          <p className="mt-1 text-[11px] tracking-[0.18em] text-ink-soft uppercase">
-            Printed in the browser
-          </p>
+        <div className="flex shrink-0 flex-col items-end gap-2">
+          <ThemeSwitch />
+          <div className="hidden text-right sm:block">
+            <p className="font-display text-xl text-ink" suppressHydrationWarning>
+              {printed}
+            </p>
+            <p className="mt-1 text-[11px] tracking-[0.18em] text-ink-soft uppercase">
+              Printed in the browser
+            </p>
+          </div>
         </div>
       </div>
 

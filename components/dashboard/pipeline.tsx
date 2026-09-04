@@ -16,7 +16,7 @@ export function Pipeline({ counts }: { counts: Record<Status, number> }) {
 
   return (
     <section className="rounded-sm border border-rule bg-ink p-5 text-paper">
-      <p className="text-[11px] tracking-[0.22em] text-[#e2b089] uppercase">The current</p>
+      <p className="text-[11px] tracking-[0.22em] text-clay uppercase">The current</p>
       <h2 className="font-display text-3xl">Where the roles sit</h2>
       <div className="mt-6 space-y-4">
         {(Object.keys(counts) as Status[]).map((status, index) => {

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Fraunces, Outfit } from "next/font/google";
 import { AppShell } from "@/components/layout/app-shell";
+import { THEME_BOOTSTRAP } from "@/lib/theme";
 import "./globals.css";
 
 const fraunces = Fraunces({
@@ -25,7 +26,10 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${fraunces.variable} ${outfit.variable}`}>
+    <html lang="en" className={`${fraunces.variable} ${outfit.variable}`} suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: THEME_BOOTSTRAP }} />
+      </head>
       <body className="font-sans antialiased">
         <AppShell>{children}</AppShell>
       </body>

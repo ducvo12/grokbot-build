@@ -19,7 +19,7 @@ export function SheetContent({
 }) {
   return (
     <Dialog.Portal>
-      <Dialog.Overlay className="fixed inset-0 z-50 bg-[#1c1914]/35 data-[state=open]:opacity-100" />
+      <Dialog.Overlay className="fixed inset-0 z-50 bg-overlay/40 data-[state=open]:opacity-100" />
       <Dialog.Content
         className={cn(
           "fixed inset-y-0 right-0 z-50 flex w-[min(560px,100vw)] flex-col border-l border-rule bg-paper shadow-[-24px_0_60px_-32px_rgb(28_25_20_/_0.55)]",

@@ -5,13 +5,13 @@ type Variant = "seal" | "ghost" | "line" | "danger";
 
 const variants: Record<Variant, string> = {
   seal:
-    "bg-clay text-vellum shadow-[0_10px_0_#8d2f10] hover:-translate-y-0.5 hover:shadow-[0_12px_0_#8d2f10] active:translate-y-1 active:shadow-[0_4px_0_#8d2f10]",
+    "bg-clay text-cream shadow-[0_10px_0_var(--clay-deep)] hover:-translate-y-0.5 hover:shadow-[0_12px_0_var(--clay-deep)] active:translate-y-1 active:shadow-[0_4px_0_var(--clay-deep)]",
   ghost:
     "bg-transparent text-ink hover:bg-paper-2/80",
   line:
     "border border-rule bg-vellum/70 text-ink hover:border-ink/40 hover:-translate-y-0.5",
   danger:
-    "bg-rust text-vellum shadow-[0_8px_0_#5c1c16] hover:-translate-y-0.5 active:translate-y-1 active:shadow-[0_3px_0_#5c1c16]",
+    "bg-rust text-cream shadow-[0_8px_0_var(--rust-deep)] hover:-translate-y-0.5 active:translate-y-1 active:shadow-[0_3px_0_var(--rust-deep)]",
 };
 
 export const Button = forwardRef<

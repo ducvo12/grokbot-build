@@ -44,7 +44,7 @@ export function MobileNav() {
           onClick={openCreate}
           className="flex flex-col items-center gap-1 py-1 text-[11px] tracking-wide text-clay"
         >
-          <span className="grid h-7 w-7 place-items-center rounded-full bg-clay text-vellum">
+          <span className="grid h-7 w-7 place-items-center rounded-full bg-clay text-cream">
             <Plus size={16} />
           </span>
           Add

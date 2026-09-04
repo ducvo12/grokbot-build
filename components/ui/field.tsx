@@ -21,7 +21,7 @@ export function Label({
 }
 
 export const fieldClass =
-  "w-full rounded-sm border border-rule bg-vellum/90 px-3 py-2.5 text-sm text-ink shadow-[inset_0_1px_0_rgb(255_255_255_/_0.6)] outline-none transition placeholder:text-ink-soft/50 focus:border-clay focus:bg-vellum";
+  "w-full rounded-sm border border-rule bg-vellum/90 px-3 py-2.5 text-sm text-ink shadow-[inset_0_1px_0_var(--sheen)] outline-none transition placeholder:text-ink-soft/50 focus:border-clay focus:bg-vellum";
 
 export function Input({
   className,
