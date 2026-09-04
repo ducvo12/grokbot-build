@@ -132,6 +132,8 @@ body {
     color-mix(in srgb, var(--rule) 55%, transparent) 27px,
     color-mix(in srgb, var(--rule) 55%, transparent) 28px
   );
+  background-position: 0 0.75rem;
+  background-attachment: local;
 }
 
 .hairline {
