@@ -11,7 +11,29 @@ import {
   YAxis,
 } from "recharts";
 import type { DashboardData } from "@/lib/db/queries";
+import { STATUS_META, STATUS_THEME } from "@/lib/constants";
 import { useTheme } from "@/components/theme/theme-provider";
+
+const SERIES = [
+  {
+    key: "created" as const,
+    name: "Roles pressed",
+    status: "saved" as const,
+    kind: "area" as const,
+  },
+  {
+    key: "interviews" as const,
+    name: STATUS_META.interview.label,
+    status: "interview" as const,
+    kind: "line" as const,
+  },
+  {
+    key: "offers" as const,
+    name: STATUS_META.offer.label,
+    status: "offer" as const,
+    kind: "line" as const,
+  },
+];
 
 function Tip({
   active,
@@ -37,6 +59,7 @@ function Tip({
 
 export function ActivityChart({ data }: { data: DashboardData["activity"] }) {
   const { resolved } = useTheme();
+  const savedColor = STATUS_THEME.saved.cssVar;
 
   return (
     <section className="rounded-sm border border-rule bg-vellum/70 p-5">
@@ -46,34 +69,57 @@ export function ActivityChart({ data }: { data: DashboardData["activity"] }) {
           <h2 className="font-display text-3xl text-ink">Twelve weeks of weather</h2>
         </div>
         <ul className="hidden text-[11px] tracking-[0.16em] text-ink-soft uppercase sm:block">
-          <li><span className="mr-2 inline-block h-2 w-2 bg-clay/70" />Roles pressed</li>
-          <li className="mt-1"><span className="mr-2 inline-block h-2 w-2 bg-ochre" />Interviews</li>
-          <li className="mt-1"><span className="mr-2 inline-block h-2 w-2 bg-gold" />Offers</li>
+          {SERIES.map((series) => (
+            <li key={series.key} className="mt-1 first:mt-0">
+              <span
+                className="mr-2 inline-block h-2 w-2"
+                style={{ backgroundColor: STATUS_THEME[series.status].cssVar }}
+              />
+              {series.name}
+            </li>
+          ))}
         </ul>
       </div>
       <div className="mt-6 h-72" key={resolved}>
         <ResponsiveContainer width="100%" height="100%">
           <ComposedChart data={data} margin={{ top: 8, right: 8, left: -18, bottom: 0 }}>
             <defs>
-              <linearGradient id="inkWash" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stopColor="var(--clay)" stopOpacity={0.35} />
-                <stop offset="100%" stopColor="var(--clay)" stopOpacity={0.02} />
+              <linearGradient id="stageWash" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stopColor={savedColor} stopOpacity={0.35} />
+                <stop offset="100%" stopColor={savedColor} stopOpacity={0.02} />
               </linearGradient>
             </defs>
             <CartesianGrid vertical={false} stroke="var(--rule)" strokeDasharray="3 7" />
             <XAxis dataKey="label" tick={{ fill: "var(--ink-soft)", fontSize: 11 }} axisLine={false} tickLine={false} />
             <YAxis allowDecimals={false} tick={{ fill: "var(--ink-soft)", fontSize: 11 }} axisLine={false} tickLine={false} />
             <Tooltip content={<Tip />} />
-            <Area
-              type="monotone"
-              dataKey="created"
-              name="Roles pressed"
-              stroke="var(--clay)"
-              strokeWidth={2}
-              fill="url(#inkWash)"
-            />
-            <Line type="monotone" dataKey="interviews" name="Interviews" stroke="var(--ochre)" strokeWidth={2} dot={false} />
-            <Line type="monotone" dataKey="offers" name="Offers" stroke="var(--gold)" strokeWidth={2} dot />
+            {SERIES.map((series) => {
+              const color = STATUS_THEME[series.status].cssVar;
+              if (series.kind === "area") {
+                return (
+                  <Area
+                    key={series.key}
+                    type="monotone"
+                    dataKey={series.key}
+                    name={series.name}
+                    stroke={color}
+                    strokeWidth={2}
+                    fill="url(#stageWash)"
+                  />
+                );
+              }
+              return (
+                <Line
+                  key={series.key}
+                  type="monotone"
+                  dataKey={series.key}
+                  name={series.name}
+                  stroke={color}
+                  strokeWidth={2}
+                  dot={series.status === "offer"}
+                />
+              );
+            })}
           </ComposedChart>
         </ResponsiveContainer>
       </div>

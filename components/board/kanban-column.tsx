@@ -2,18 +2,10 @@
 
 import { useDndContext, useDroppable } from "@dnd-kit/core";
 import { SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable";
-import { STATUS_META, type Status } from "@/lib/constants";
+import { STATUS_META, STATUS_THEME, type Status } from "@/lib/constants";
 import type { Application } from "@/lib/db/schema";
 import { KanbanCard } from "@/components/board/kanban-card";
 import { cn } from "@/lib/cn";
-
-const heads: Record<Status, string> = {
-  saved: "border-sage text-sage",
-  applied: "border-clay text-clay",
-  interview: "border-ochre text-ochre",
-  offer: "border-gold text-gold",
-  rejected: "border-rust text-rust",
-};
 
 export function KanbanColumn({
   status,
@@ -40,7 +32,7 @@ export function KanbanColumn({
         overInColumn && "bg-paper-2",
       )}
     >
-      <header className={cn("flex items-end justify-between border-b-2 px-3 py-3", heads[status])}>
+      <header className={cn("flex items-end justify-between border-b-2 px-3 py-3", STATUS_THEME[status].column)}>
         <h2 className="font-display text-2xl text-ink mt-4">{STATUS_META[status].label}</h2>
         <span className="font-display text-xl tracking-[0.2em] uppercase">{items.length}</span>
       </header>

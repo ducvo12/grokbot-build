@@ -74,7 +74,7 @@ export function formatInterviewCue(value: string | null | undefined): string | n
 }
 
 /**
- * Done → sage. Upcoming/today → ochre→rust by urgency
+ * Done → sage (offer green). Upcoming/today → ochre→rust by urgency
  * (yellow at ≥30 days out, red at ≤1 day / today).
  */
 export function interviewCueColor(value: string): string {

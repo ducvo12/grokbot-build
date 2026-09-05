@@ -25,6 +25,7 @@
   --color-rust: var(--rust);
   --color-rust-deep: var(--rust-deep);
   --color-moss: var(--moss);
+  --color-slate: var(--slate);
   --color-overlay: var(--overlay);
 }
 
@@ -40,11 +41,12 @@
   --clay: #c24d1d;
   --clay-deep: #8d2f10;
   --sage: #3f5c45;
-  --ochre: #b47b1a;
+  --ochre: #c49a12;
   --gold: #8a6a12;
   --rust: #8a2e22;
   --rust-deep: #5c1c16;
   --moss: #243528;
+  --slate: #4a5d72;
   --overlay: #1c1914;
   --desk: #2a2118;
   --wash-top: #f7f0e2;
@@ -66,11 +68,12 @@ html.dark {
   --clay: #e06a3a;
   --clay-deep: #b4451c;
   --sage: #8faf93;
-  --ochre: #d4a04a;
+  --ochre: #e0b83a;
   --gold: #c9ae4a;
   --rust: #d46a5c;
   --rust-deep: #7a2a22;
   --moss: #6a8a70;
+  --slate: #8fa3b8;
   --overlay: #050403;
   --desk: #0d0b09;
   --wash-top: #16120f;
