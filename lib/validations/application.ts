@@ -54,6 +54,11 @@ export const applicationSchema = z
       .optional()
       .or(z.literal(""))
       .transform((value) => value || undefined),
+    interviewAt: z
+      .string()
+      .optional()
+      .or(z.literal(""))
+      .transform((value) => value || undefined),
     status: z.enum(STATUSES),
     notes: z
       .string()

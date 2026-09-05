@@ -11,6 +11,7 @@ export const applications = sqliteTable("applications", {
   salaryMax: integer("salary_max"),
   jobUrl: text("job_url"),
   appliedAt: text("applied_at"),
+  interviewAt: text("interview_at"),
   status: text("status", { enum: STATUSES }).$type<Status>().notNull(),
   notes: text("notes"),
   source: text("source"),

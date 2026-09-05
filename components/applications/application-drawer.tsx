@@ -13,6 +13,7 @@ import { Button } from "@/components/ui/button";
 import { CompanySeal } from "@/components/brand/company-seal";
 import { StatusStamp } from "@/components/brand/status-stamp";
 import { formatSalary } from "@/lib/format";
+import { InterviewCue } from "@/components/shared/interview-cue";
 import { RelativeTime } from "@/components/shared/relative-time";
 
 export function ApplicationDrawer({
@@ -43,6 +44,7 @@ export function ApplicationDrawer({
       salaryMax: values.salaryMax ?? null,
       jobUrl: values.jobUrl ?? null,
       appliedAt: values.appliedAt ?? null,
+      interviewAt: values.interviewAt ?? null,
       notes: values.notes ?? null,
       source: values.source ?? null,
       updatedAt: new Date().toISOString(),
@@ -64,6 +66,11 @@ export function ApplicationDrawer({
     onClose();
   }
 
+  const showInterview =
+    application &&
+    (application.status === "interview" || application.status === "offer") &&
+    Boolean(application.interviewAt);
+
   return (
     <>
       <Sheet open={Boolean(application)} onOpenChange={(open) => !open && onClose()}>
@@ -79,6 +86,9 @@ export function ApplicationDrawer({
                     {formatSalary(application.salaryMin, application.salaryMax)
                       ? ` · ${formatSalary(application.salaryMin, application.salaryMax)}`
                       : ""}
+                    {showInterview && application.interviewAt ? (
+                      <InterviewCue value={application.interviewAt} prefix=" · " />
+                    ) : null}
                   </p>
                 </div>
               </div>

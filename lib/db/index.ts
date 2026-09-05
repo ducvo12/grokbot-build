@@ -23,6 +23,7 @@ function createDatabase() {
       salary_max INTEGER,
       job_url TEXT,
       applied_at TEXT,
+      interview_at TEXT,
       status TEXT NOT NULL,
       notes TEXT,
       source TEXT,
@@ -43,6 +44,21 @@ function createDatabase() {
     CREATE INDEX IF NOT EXISTS applications_created_idx ON applications(created_at);
     CREATE INDEX IF NOT EXISTS status_events_changed_idx ON status_events(changed_at);
   `);
+
+  // Existing DBs created before interview_at still need the column.
+  const columns = sqlite.prepare(`PRAGMA table_info(applications)`).all() as {
+    name: string;
+  }[];
+  if (!columns.some((column) => column.name === "interview_at")) {
+    sqlite.exec(`ALTER TABLE applications ADD COLUMN interview_at TEXT`);
+    sqlite.exec(`
+      UPDATE applications SET interview_at = '2026-09-11' WHERE id = 'app_stripe';
+      UPDATE applications SET interview_at = '2026-08-28' WHERE id = 'app_linear';
+      UPDATE applications SET interview_at = '2026-09-07' WHERE id = 'app_figma';
+      UPDATE applications SET interview_at = '2026-09-22' WHERE id = 'app_airbnb';
+      UPDATE applications SET interview_at = '2026-08-30' WHERE id = 'app_superhuman';
+    `);
+  }
 
   const db = drizzle(sqlite, { schema });
   seedIfEmpty(db);

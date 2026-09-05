@@ -15,6 +15,7 @@ type SeedRow = {
   salaryMax?: number;
   jobUrl?: string;
   appliedAt?: string;
+  interviewAt?: string;
   status: Status;
   notes?: string;
   source?: string;
@@ -32,6 +33,7 @@ const seedRows: SeedRow[] = [
     salaryMax: 280000,
     jobUrl: "https://stripe.com/jobs",
     appliedAt: "2026-07-18",
+    interviewAt: "2026-09-11",
     status: "interview",
     source: "Company site",
     notes:
@@ -52,6 +54,7 @@ const seedRows: SeedRow[] = [
     salaryMax: 220000,
     jobUrl: "https://linear.app/careers",
     appliedAt: "2026-08-02",
+    interviewAt: "2026-08-28",
     status: "interview",
     source: "Referral",
     notes:
@@ -85,6 +88,7 @@ const seedRows: SeedRow[] = [
     salaryMax: 240000,
     jobUrl: "https://www.figma.com/careers",
     appliedAt: "2026-07-09",
+    interviewAt: "2026-09-07",
     status: "interview",
     source: "Company site",
     notes: "Design exercise due Sunday. Keep it opinionated, not a component library tour.",
@@ -204,6 +208,7 @@ const seedRows: SeedRow[] = [
     salaryMin: 190000,
     salaryMax: 250000,
     appliedAt: "2026-07-24",
+    interviewAt: "2026-09-22",
     status: "interview",
     source: "Recruiter",
     notes: "Recruiter wants onsite in late September. Confirm travel before accepting.",
@@ -287,6 +292,7 @@ const seedRows: SeedRow[] = [
     salaryMin: 160000,
     salaryMax: 210000,
     appliedAt: "2026-07-30",
+    interviewAt: "2026-08-30",
     status: "interview",
     source: "Wellfound",
     notes: "Keyboard-first take-home. They noticed the command palette in my last product.",
@@ -355,6 +361,7 @@ function insertSeed(db: Db) {
         salaryMax: row.salaryMax ?? null,
         jobUrl: row.jobUrl ?? null,
         appliedAt: row.appliedAt ?? null,
+        interviewAt: row.interviewAt ?? null,
         status: row.status,
         notes: row.notes ?? null,
         source: row.source ?? null,

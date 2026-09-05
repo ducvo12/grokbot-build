@@ -1,6 +1,6 @@
 "use client";
 
-import { Controller, useForm } from "react-hook-form";
+import { Controller, useForm, useWatch } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SOURCES, STATUSES, STATUS_META } from "@/lib/constants";
 import {
@@ -13,6 +13,13 @@ import { FieldError, Input, Label, Textarea } from "@/components/ui/field";
 import { Select } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 
+function todayDateInputValue() {
+  const now = new Date();
+  const month = String(now.getMonth() + 1).padStart(2, "0");
+  const day = String(now.getDate()).padStart(2, "0");
+  return `${now.getFullYear()}-${month}-${day}`;
+}
+
 function toValues(application?: Application | null): ApplicationFormValues {
   return {
     companyName: application?.companyName ?? "",
@@ -22,7 +29,8 @@ function toValues(application?: Application | null): ApplicationFormValues {
     salaryMin: application?.salaryMin ?? undefined,
     salaryMax: application?.salaryMax ?? undefined,
     jobUrl: application?.jobUrl ?? "",
-    appliedAt: application?.appliedAt ?? "",
+    appliedAt: application?.appliedAt ?? (application ? "" : todayDateInputValue()),
+    interviewAt: application?.interviewAt ?? "",
     status: application?.status ?? "saved",
     notes: application?.notes ?? "",
     source: application?.source ?? "",
@@ -44,6 +52,8 @@ export function ApplicationForm({
     resolver: zodResolver(applicationSchema),
     defaultValues: toValues(application),
   });
+  const stage = useWatch({ control: form.control, name: "status" });
+  const showInterviewDate = stage === "interview" || stage === "offer";
 
   return (
     <form
@@ -72,7 +82,9 @@ export function ApplicationForm({
           <FieldError message={form.formState.errors.location?.message} />
         </div>
         <div>
-          <Label htmlFor="source">Source</Label>
+          <Label htmlFor="source" hint="where you found it">
+            Source
+          </Label>
           <Controller
             name="source"
             control={form.control}
@@ -130,11 +142,23 @@ export function ApplicationForm({
           />
         </div>
         <div>
-          <Label htmlFor="jobUrl">Posting</Label>
+          <Label htmlFor="jobUrl" hint="link to the listing">
+            Posting
+          </Label>
           <Input id="jobUrl" placeholder="https://" {...form.register("jobUrl")} />
           <FieldError message={form.formState.errors.jobUrl?.message} />
         </div>
       </div>
+
+      {showInterviewDate ? (
+        <div>
+          <Label htmlFor="interviewAt" hint="optional · past or upcoming">
+            Interview
+          </Label>
+          <Input id="interviewAt" type="date" {...form.register("interviewAt")} />
+          <FieldError message={form.formState.errors.interviewAt?.message} />
+        </div>
+      ) : null}
 
       <div>
         <Label htmlFor="companyLogoUrl" hint="optional">

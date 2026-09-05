@@ -7,6 +7,7 @@ import type { Application } from "@/lib/db/schema";
 import { CompanySeal } from "@/components/brand/company-seal";
 import { StatusStamp } from "@/components/brand/status-stamp";
 import { formatSalary, formatShortDate } from "@/lib/format";
+import { InterviewCue } from "@/components/shared/interview-cue";
 import { RelativeTime } from "@/components/shared/relative-time";
 import { useFolioUi } from "@/components/providers";
 import { EmptyState } from "@/components/shared/empty-state";
@@ -92,7 +93,12 @@ export function ApplicationList({
         />
       ) : (
         <ul className="divide-y divide-rule border-y border-rule">
-          {visible.map((application) => (
+          {visible.map((application) => {
+            const showInterview =
+              (application.status === "interview" || application.status === "offer") &&
+              Boolean(application.interviewAt);
+
+            return (
             <li
               key={application.id}
               className="flex items-stretch pr-1 transition hover:bg-vellum/70"
@@ -119,9 +125,13 @@ export function ApplicationList({
                       </span>
                     ) : null}
                     {formatSalary(application.salaryMin, application.salaryMax)}
-                    {application.appliedAt
-                      ? `Dated ${formatShortDate(application.appliedAt)}`
-                      : "No date yet"}
+                    {showInterview && application.interviewAt ? (
+                      <InterviewCue value={application.interviewAt} />
+                    ) : application.appliedAt ? (
+                      `Dated ${formatShortDate(application.appliedAt)}`
+                    ) : (
+                      "No date yet"
+                    )}
                     <span>
                       Revised <RelativeTime value={application.updatedAt} />
                     </span>
@@ -138,7 +148,8 @@ export function ApplicationList({
                 <Trash2 size={16} />
               </button>
             </li>
-          ))}
+            );
+          })}
         </ul>
       )}
     </div>

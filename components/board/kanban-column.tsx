@@ -41,11 +41,8 @@ export function KanbanColumn({
       )}
     >
       <header className={cn("flex items-end justify-between border-b-2 px-3 py-3", heads[status])}>
-        <div>
-          <p className="text-[11px] tracking-[0.2em] uppercase">{STATUS_META[status].label}</p>
-          <h2 className="font-display text-2xl text-ink">{STATUS_META[status].label}</h2>
-        </div>
-        <span className="font-display text-2xl text-ink">{items.length}</span>
+        <h2 className="font-display text-2xl text-ink mt-4">{STATUS_META[status].label}</h2>
+        <span className="font-display text-xl tracking-[0.2em] uppercase">{items.length}</span>
       </header>
       <SortableContext items={items.map((item) => item.id)} strategy={verticalListSortingStrategy}>
         <div className="flex min-h-40 flex-1 flex-col gap-3 p-3">

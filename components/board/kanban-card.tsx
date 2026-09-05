@@ -6,11 +6,15 @@ import { MapPin } from "lucide-react";
 import type { Application } from "@/lib/db/schema";
 import { CompanySeal } from "@/components/brand/company-seal";
 import { formatSalary, formatShortDate } from "@/lib/format";
+import { InterviewCue } from "@/components/shared/interview-cue";
 import { cn } from "@/lib/cn";
 import { useFolioUi } from "@/components/providers";
 
 function CardFace({ application }: { application: Application }) {
   const salary = formatSalary(application.salaryMin, application.salaryMax);
+  const showInterview =
+    (application.status === "interview" || application.status === "offer") &&
+    Boolean(application.interviewAt);
 
   return (
     <>
@@ -29,7 +33,11 @@ function CardFace({ application }: { application: Application }) {
           </span>
         ) : null}
         {salary ? <span>{salary}</span> : null}
-        {application.appliedAt ? <span>{formatShortDate(application.appliedAt)}</span> : null}
+        {showInterview && application.interviewAt ? (
+          <InterviewCue value={application.interviewAt} />
+        ) : application.appliedAt ? (
+          <span>{formatShortDate(application.appliedAt)}</span>
+        ) : null}
       </div>
     </>
   );
